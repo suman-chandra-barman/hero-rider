@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import JoinDrawer from "../../components/JoinDrawer";
 import LoginDrawer from "../../components/LoginDrawer";
 
 const Navbar = () => {
-  const [loginDrawer, setLoginDrawer] = useState(true);
-  const [joinDrawer, setJoinDrawer] = useState(true);
-
-  console.log(loginDrawer, joinDrawer);
   const items = (
     <>
       <li>
@@ -36,26 +32,12 @@ const Navbar = () => {
         </ul>
       </li>
       <li>
-        <label
-          onClick={() => {
-            setLoginDrawer(false);
-            setJoinDrawer(true);
-          }}
-          htmlFor="join-drawer"
-          className="drawer-button active:bg-inherit"
-        >
+        <label htmlFor="join-modal" className="active:bg-inherit">
           Join
         </label>
       </li>
       <li>
-        <label
-          onClick={() => {
-            setJoinDrawer(false);
-            setLoginDrawer(true);
-          }}
-          htmlFor="login-drawer"
-          className="drawer-button active:bg-inherit"
-        >
+        <label htmlFor="login-modal" className="active:bg-inherit">
           Login
         </label>
       </li>
@@ -95,12 +77,8 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{items}</ul>
         </div>
       </div>
-      <div className={`${loginDrawer ? "block" : "hidden"}`}>
-        <LoginDrawer />
-      </div>
-      <div className={`${joinDrawer ? "block" : "hidden"}`}>
-        <JoinDrawer />
-      </div>
+      <LoginDrawer />
+      <JoinDrawer />
     </section>
   );
 };

@@ -4,37 +4,41 @@ import { Link } from "react-router-dom";
 
 const JoinDrawer = () => {
   return (
-    <div className="drawer drawer-end">
-      <input id="join-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">{/* Page content here  */}</div>
-      <div className="drawer-side">
-        <label htmlFor="join-drawer" className="drawer-overlay"></label>
-        <div className="menu p-4 w-full bg-base-100">
-          {/* <!-- Sidebar content here --> */}
-          <div className="flex justify-center text-xl md:text-2xl font-bold items-center min-h-screen">
-            <div className="md:flex justify-center gap-5 relative">
-              <li className="underline">
-                <Link className="active:bg-inherit hover:bg-inherit">
-                  Join as a rider <FaLongArrowAltRight />
-                </Link>
-              </li>
-              <li className="underline">
-                <Link className="active:bg-inherit hover:bg-inherit">
-                  Join as a Driving Lesson Learner
-                  <FaLongArrowAltRight />
-                </Link>
-              </li>
-              <label
-                htmlFor="join-drawer"
-                className="btn btn-sm btn-circle absolute top-0 md:top-[-100px] right-0"
+    <>
+      <input type="checkbox" id="join-modal" className="modal-toggle" />
+      <div className="modal ">
+        <div className="modal-box relative md:p-10">
+          <label
+            htmlFor="join-modal"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
+          <h3 className="text-lg md:text-2xl font-bold text-center">
+            Please Join!
+          </h3>
+          <div className="mt-5">
+            <label htmlFor="join-modal" className="btn w-full">
+              <Link
+                to="/rider-register"
+                className="active:bg-inherit hover:bg-inherit flex gap-3"
               >
-                ✕
-              </label>
-            </div>
+                Join as a rider <FaLongArrowAltRight />
+              </Link>
+            </label>
+            <label htmlFor="join-modal" className="btn mt-2 w-full">
+              <Link
+                to="/learner-register"
+                className="active:bg-inherit hover:bg-inherit flex gap-3"
+              >
+                Join as a Driving Lesson Learner
+                <FaLongArrowAltRight />
+              </Link>
+            </label>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
