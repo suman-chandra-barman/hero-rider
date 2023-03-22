@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        toast.success("User Logout successful!");
+      })
+      .catch((error) => console.error(error));
+  };
   const items = (
     <>
       <li>
-        <Link className="active:bg-inherit">Home</Link>
+        <Link to="/" className="active:bg-inherit">
+          Home
+        </Link>
       </li>
+      {user?.email === "admin@admin.com" && (
+        <li>
+          <Link to="/admin-panel" className="active:bg-inherit">
+            Admin Panel
+          </Link>
+        </li>
+      )}
+
       <li tabIndex={0}>
         <Link className="active:bg-inherit">
           Services
@@ -29,58 +49,66 @@ const Navbar = () => {
           </li>
         </ul>
       </li>
-      <li tabIndex={0}>
-        <Link className="active:bg-inherit">
-          Join
-          <svg
-            className="fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-          >
-            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-          </svg>
-        </Link>
-        <ul className="p-2">
-          <li>
-            <Link to="/rider-register" className="active:bg-inherit">
-              Rider
+      {!user?.uid && (
+        <>
+          <li tabIndex={0}>
+            <Link className="active:bg-inherit">
+              Join
+              <svg
+                className="fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+              </svg>
             </Link>
+            <ul className="p-2">
+              <li>
+                <Link to="/rider-register" className="active:bg-inherit">
+                  Rider
+                </Link>
+              </li>
+              <li>
+                <Link to="/learner-register" className="active:bg-inherit">
+                  Driving learner
+                </Link>
+              </li>
+            </ul>
           </li>
-          <li>
-            <Link to="/learner-register" className="active:bg-inherit">
-              Driving learner
+          <li tabIndex={0}>
+            <Link className="active:bg-inherit">
+              Login
+              <svg
+                className="fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+              </svg>
             </Link>
+            <ul className="p-2">
+              <li>
+                <Link to="/rider-login" className="active:bg-inherit">
+                  Rider
+                </Link>
+              </li>
+              <Link to="/learner-login" className="active:bg-inherit">
+                Driving learner
+              </Link>
+            </ul>
           </li>
-        </ul>
-      </li>
-      <li tabIndex={0}>
-        <Link className="active:bg-inherit">
-          Login
-          <svg
-            className="fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-          >
-            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-          </svg>
-        </Link>
-        <ul className="p-2">
-          <li>
-            <Link to="/rider-login" className="active:bg-inherit">
-              Rider
-            </Link>
-          </li>
-          <li>
-            <Link to="/learner-login" className="active:bg-inherit">
-              Driving learner
-            </Link>
-          </li>
-        </ul>
-      </li>
+        </>
+      )}
+
+      {user?.uid && (
+        <button onClick={handleLogout} className="btn text-white btn-error">
+          Logout
+        </button>
+      )}
     </>
   );
   return (

@@ -16,6 +16,7 @@ const RiderRegister = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    setSignUpError("");
     const form = e.target;
     const full_name = form.full_name.value;
     const email = form.email.value;
