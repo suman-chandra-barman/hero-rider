@@ -7,9 +7,9 @@ const RiderRegister = () => {
   const [profileImg, setProfileImg] = useState("");
   const [nidImg, setNidImg] = useState("");
   const [licenseImg, setLicenseImg] = useState("");
-
-  const { createUser, user, updateUserProfile } = useContext(AuthContext);
   const [signUpError, setSignUpError] = useState("");
+
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const imgApi = process.env.REACT_APP_imageBbApi;
@@ -63,7 +63,7 @@ const RiderRegister = () => {
       })
         .then((res) => res.json())
         .then((imageData) => {
-          console.log(imageData);
+          console.log(imageData.data.url);
           setProfileImg(imageData.data.url);
           if (imageData.success) {
             // nid picture upload
@@ -103,6 +103,23 @@ const RiderRegister = () => {
                             updateUserProfile(full_name, profileImg)
                               .then(() => {
                                 console.log("User name and photo update");
+
+                                const userInfo = {
+                                  full_name,
+                                  email,
+                                  age,
+                                  address,
+                                  phone,
+                                  area,
+                                  vehicle_name,
+                                  vehicle_model,
+                                  vehicle_palate,
+                                  vehicle_type,
+                                  profileImg,
+                                  licenseImg,
+                                  nidImg,
+                                };
+                                storeUserData(userInfo);
                               })
                               .catch((error) => {
                                 console.error(error);
@@ -123,29 +140,27 @@ const RiderRegister = () => {
     }
   };
 
-  // const userStore = (name, email, account) => {
-  //   const user = { name, email, account };
-  //   console.log("user", user);
-  //   fetch("https://used-laptop-shop.vercel.app/users", {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify(user),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.acknowledged) {
-  //         console.log(data);
-  //         navigate(from, { replace: true });
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const storeUserData = (userinfo) => {
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userinfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          console.log(data);
+          // navigate(from, { replace: true });
+        }
+      })
+      .catch((err) => console.error(err));
+  };
   return (
-    <section className=" container mx-auto mt-16">
-      <div className="md:w-1/2 mx-auto">
-        <h2 className="text-3xl font-semibold text-center mb-5">
+    <section className="container mx-auto mt-8 md:mt-16">
+      <div className="md:w-1/2 mx-auto p-2">
+        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-5">
           Register as a rider!
         </h2>
         <form onSubmit={handleRegister}>
