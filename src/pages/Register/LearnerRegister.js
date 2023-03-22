@@ -3,10 +3,9 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
-const RiderRegister = () => {
+const LearnerRegister = () => {
   const [profileImg, setProfileImg] = useState("");
   const [nidImg, setNidImg] = useState("");
-  const [licenseImg, setLicenseImg] = useState("");
   const [signUpError, setSignUpError] = useState("");
 
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -24,14 +23,9 @@ const RiderRegister = () => {
     const age = form.age.value;
     const address = form.address.value;
     const phone = form.phone.value;
-    const area = form.area.value;
-    const vehicle_name = form.vehicle_name.value;
-    const vehicle_model = form.vehicle_model.value;
-    const vehicle_palate = form.vehicle_palate.value;
     const vehicle_type = form.vehicle_type.value;
     const profile_picture = form.profile_picture.files[0];
     const nid_picture = form.nid_picture.files[0];
-    const license_picture = form.license_picture.files[0];
 
     if (password === confirm_password) {
       setSignUpError("");
@@ -61,59 +55,39 @@ const RiderRegister = () => {
                 if (data.success) {
                   console.log(data.data.url);
                   setNidImg(data.data.url);
+                  // create user with email and password
+                  createUser(email, password)
+                    .then((result) => {
+                      const user = result.user;
+                      console.log(user);
+                      setSignUpError("");
+                      toast.success("Registration success!");
+                      // e.target.reset();
 
-                  // license picture upload
-                  fromData.append("image", license_picture);
-                  const url = `https://api.imgbb.com/1/upload?key=${imgApi}`;
-                  fetch(url, {
-                    method: "POST",
-                    body: fromData,
-                  })
-                    .then((res) => res.json())
-                    .then((data) => {
-                      if (data.success) {
-                        console.log(data.data.url);
-                        setLicenseImg(data.data.url);
+                      // update user name and profile photo
+                      handleProfileUpdate(full_name)
+                        .then(() => {
+                          console.log("User name and photo update");
 
-                        // create user with email and password
-                        createUser(email, password)
-                          .then((result) => {
-                            const user = result.user;
-                            console.log(user);
-                            setSignUpError("");
-                            toast.success("Registration success!");
-                            // e.target.reset();
-
-                            // update user name and profile photo
-                            handleProfileUpdate(full_name)
-                              .then(() => {
-                                console.log("User name and photo update");
-
-                                const userInfo = {
-                                  full_name,
-                                  email,
-                                  age,
-                                  address,
-                                  phone,
-                                  area,
-                                  vehicle_name,
-                                  vehicle_model,
-                                  vehicle_palate,
-                                  vehicle_type,
-                                  role: "rider",
-                                };
-                                console.log("userinfo", userInfo);
-                                storeUserData(userInfo);
-                              })
-                              .catch((error) => {
-                                console.error(error);
-                                console.log("user info update error");
-                              });
-                          })
-                          .catch((error) => {
-                            console.log(error);
-                          });
-                      }
+                          const userInfo = {
+                            full_name,
+                            email,
+                            age,
+                            address,
+                            phone,
+                            vehicle_type,
+                            role: "learner",
+                          };
+                          console.log("userinfo", userInfo);
+                          storeUserData(userInfo);
+                        })
+                        .catch((error) => {
+                          console.error(error);
+                          console.log("user info update error");
+                        });
+                    })
+                    .catch((error) => {
+                      console.log(error);
                     });
                 }
               });
@@ -123,15 +97,15 @@ const RiderRegister = () => {
       setSignUpError("Password doesn't match");
     }
   };
-  console.log(profileImg, nidImg, licenseImg);
+  console.log(profileImg, nidImg);
 
   const handleProfileUpdate = (full_name) => {
     return updateUserProfile(full_name, profileImg);
   };
 
   const storeUserData = (userinfo) => {
-    const userData = { ...userinfo, profileImg, nidImg, licenseImg };
-    fetch("http://localhost:5000/users", {
+    const userData = { ...userinfo, profileImg, nidImg };
+    fetch("http://localhost:5000/learners", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -151,7 +125,7 @@ const RiderRegister = () => {
     <section className="container mx-auto mt-8 md:mt-16">
       <div className="md:w-1/2 mx-auto p-2">
         <h2 className="text-2xl md:text-3xl font-semibold text-center mb-5">
-          Register as a rider!
+          Register as a Driving Learner!
         </h2>
         <form onSubmit={handleRegister}>
           <div className=" mx-auto grid grid-cols-1 gap-2">
@@ -206,34 +180,6 @@ const RiderRegister = () => {
               className="input input-bordered w-full"
               required
             />
-            <input
-              name="area"
-              type="text"
-              placeholder="Area"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              name="vehicle_name"
-              type="text"
-              placeholder="Vehicle name"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              name="vehicle_model"
-              type="text"
-              placeholder="Vehicle model"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              name="vehicle_palate"
-              type="text"
-              placeholder="Vehicle palate"
-              className="input input-bordered w-full"
-              required
-            />
             <select
               name="vehicle_type"
               className="select select-bordered w-full text-slate-500"
@@ -259,14 +205,6 @@ const RiderRegister = () => {
                 className="input input-bordered w-full"
               />
             </div>
-            <div>
-              <label htmlFor="">Driving license picture</label>
-              <input
-                name="license_picture"
-                type="file"
-                className="input input-bordered w-full"
-              />
-            </div>
             <span className="text-red-500">{signUpError}</span>
             <button className="btn w-full" type="submit">
               Register
@@ -276,7 +214,7 @@ const RiderRegister = () => {
         <div>
           <p className="mt-3">
             Already, have an account? Please{" "}
-            <Link className="text-info" to="/rider-login">
+            <Link className="text-info" to="/learner-login">
               Login
             </Link>
           </p>
@@ -286,4 +224,4 @@ const RiderRegister = () => {
   );
 };
 
-export default RiderRegister;
+export default LearnerRegister;

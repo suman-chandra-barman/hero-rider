@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import JoinDrawer from "../../components/JoinDrawer";
-import LoginDrawer from "../../components/LoginDrawer";
 
 const Navbar = () => {
   const items = (
@@ -31,15 +29,57 @@ const Navbar = () => {
           </li>
         </ul>
       </li>
-      <li>
-        <label htmlFor="join-modal" className="active:bg-inherit">
+      <li tabIndex={0}>
+        <Link className="active:bg-inherit">
           Join
-        </label>
+          <svg
+            className="fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+          >
+            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+          </svg>
+        </Link>
+        <ul className="p-2">
+          <li>
+            <Link to="/rider-register" className="active:bg-inherit">
+              Rider
+            </Link>
+          </li>
+          <li>
+            <Link to="/learner-register" className="active:bg-inherit">
+              Driving learner
+            </Link>
+          </li>
+        </ul>
       </li>
-      <li>
-        <label htmlFor="login-modal" className="active:bg-inherit">
+      <li tabIndex={0}>
+        <Link className="active:bg-inherit">
           Login
-        </label>
+          <svg
+            className="fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+          >
+            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+          </svg>
+        </Link>
+        <ul className="p-2">
+          <li>
+            <Link to="/rider-login" className="active:bg-inherit">
+              Rider
+            </Link>
+          </li>
+          <li>
+            <Link to="/learner-login" className="active:bg-inherit">
+              Driving learner
+            </Link>
+          </li>
+        </ul>
       </li>
     </>
   );
@@ -77,8 +117,6 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{items}</ul>
         </div>
       </div>
-      <LoginDrawer />
-      <JoinDrawer />
     </section>
   );
 };
