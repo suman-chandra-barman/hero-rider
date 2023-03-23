@@ -13,7 +13,7 @@ const Admin = () => {
   const [pageNumber, setPageNumber] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users?page=${pageNumber}`)
+    fetch(`https://hero-rider-server-sable.vercel.app/users?page=${pageNumber}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

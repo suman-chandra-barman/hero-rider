@@ -19,18 +19,6 @@ const Navbar = () => {
           Home
         </Link>
       </li>
-      {user?.email === "admin@admin.com" && (
-        <li>
-          <Link to="/admin-panel" className="active:bg-inherit">
-            Admin Panel
-          </Link>
-        </li>
-      )}
-      <li>
-        <Link to="/contact" className="active:bg-inherit">
-          Contact Us
-        </Link>
-      </li>
       <li tabIndex={0}>
         <Link className="active:bg-inherit">
           Services
@@ -53,6 +41,25 @@ const Navbar = () => {
           </li>
         </ul>
       </li>
+      {user?.email === "admin@admin.com" && (
+        <li>
+          <Link to="/admin-panel" className="active:bg-inherit">
+            Admin Panel
+          </Link>
+        </li>
+      )}
+      <li>
+        <Link to="/contact" className="active:bg-inherit">
+          Contact Us
+        </Link>
+      </li>
+      {user?.uid && (
+        <li>
+          <Link to="/profile" className="active:bg-inherit">
+            Profile
+          </Link>
+        </li>
+      )}
       {!user?.uid && (
         <>
           <li tabIndex={0}>
@@ -100,14 +107,15 @@ const Navbar = () => {
                   Rider
                 </Link>
               </li>
-              <Link to="/learner-login" className="active:bg-inherit">
-                Driving learner
-              </Link>
+              <li>
+                <Link to="/learner-login" className="active:bg-inherit">
+                  Driving learner
+                </Link>
+              </li>
             </ul>
           </li>
         </>
       )}
-
       {user?.uid && (
         <button onClick={handleLogout} className="btn text-white btn-error">
           Logout

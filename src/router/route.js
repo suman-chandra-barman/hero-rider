@@ -5,6 +5,7 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import Home from "../pages/Home/Home/Home";
 import LearnerLogin from "../pages/Login/LearnerLogin";
 import RiderLogin from "../pages/Login/RiderLogin";
+import Profile from "../pages/Profile/Profile";
 import LearnerRegister from "../pages/Register/LearnerRegister";
 import RiderRegister from "../pages/Register/RiderRegister";
 import AdminRoute from "./AdminRoute";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactUs />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       {
         path: "/admin-panel",

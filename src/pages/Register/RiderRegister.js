@@ -132,7 +132,7 @@ const RiderRegister = () => {
 
   const storeUserData = (userinfo) => {
     const userData = { ...userinfo, profileImg, nidImg, licenseImg };
-    fetch("http://localhost:5000/users", {
+    fetch("https://hero-rider-server-sable.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",

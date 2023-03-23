@@ -1,16 +1,17 @@
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const LearnerRegister = () => {
-  const [profileImg, setProfileImg] = useState("");
-  const [nidImg, setNidImg] = useState("");
+  const [profileImg, setProfileImg] = useState(" ");
+  const [nidImg, setNidImg] = useState(" ");
   const [signUpError, setSignUpError] = useState("");
 
   const { createUser, updateUserProfile } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
-
+  let from = location.state?.from?.pathname || "/profile";
   const imgApi = process.env.REACT_APP_imageBbApi;
 
   const handleRegister = (e) => {
@@ -53,8 +54,9 @@ const LearnerRegister = () => {
               .then((res) => res.json())
               .then((data) => {
                 if (data.success) {
-                  console.log(data.data.url);
+                  console.log("profile img", data.data.url);
                   setNidImg(data.data.url);
+                  console.log("set img", nidImg);
                   // create user with email and password
                   createUser(email, password)
                     .then((result) => {
@@ -62,13 +64,12 @@ const LearnerRegister = () => {
                       console.log(user);
                       setSignUpError("");
                       toast.success("Registration success!");
-                      // e.target.reset();
-
+                      e.target.reset();
+                      navigate(from, { replace: true });
                       // update user name and profile photo
                       handleProfileUpdate(full_name)
                         .then(() => {
                           console.log("User name and photo update");
-
                           const userInfo = {
                             full_name,
                             email,
@@ -97,15 +98,17 @@ const LearnerRegister = () => {
       setSignUpError("Password doesn't match");
     }
   };
-  console.log(profileImg, nidImg);
 
   const handleProfileUpdate = (full_name) => {
     return updateUserProfile(full_name, profileImg);
   };
-
+  const pic = { profileImg, nidImg };
+  console.log("pic", pic);
   const storeUserData = (userinfo) => {
+    const { profileImg, nidImg } = pic;
     const userData = { ...userinfo, profileImg, nidImg };
-    fetch("http://localhost:5000/learners", {
+    console.log(userData);
+    fetch("https://hero-rider-server-sable.vercel.app/learners", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -116,7 +119,6 @@ const LearnerRegister = () => {
       .then((data) => {
         if (data.acknowledged) {
           console.log(data);
-          // navigate(from, { replace: true });
         }
       })
       .catch((err) => console.error(err));
