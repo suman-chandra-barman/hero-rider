@@ -5,7 +5,7 @@ import { FaPhone, FaCommentAlt, FaMapMarkerAlt } from "react-icons/fa";
 const Footer = () => {
   return (
     <>
-      <footer className="bg-blue-50 py-8 md:py-16 px-2">
+      <footer className="bg-blue-50 py-8 md:py-16 px-2 mt-16">
         <div className="footer container mx-auto">
           <div>
             <Link to="/" className="text-3xl font-mono font-extrabold">

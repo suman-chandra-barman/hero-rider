@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Admin from "../pages/AdminPage/Admin";
+import ContactUs from "../pages/ContactUs/ContactUs";
 import Home from "../pages/Home/Home/Home";
 import LearnerLogin from "../pages/Login/LearnerLogin";
 import RiderLogin from "../pages/Login/RiderLogin";
@@ -34,8 +35,11 @@ const router = createBrowserRouter([
         element: <LearnerLogin />,
       },
       {
+        path: "/contact",
+        element: <ContactUs />,
+      },
+      {
         path: "/admin-panel",
-
         element: (
           <AdminRoute>
             <Admin />

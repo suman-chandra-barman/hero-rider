@@ -26,7 +26,11 @@ const Navbar = () => {
           </Link>
         </li>
       )}
-
+      <li>
+        <Link to="/contact" className="active:bg-inherit">
+          Contact Us
+        </Link>
+      </li>
       <li tabIndex={0}>
         <Link className="active:bg-inherit">
           Services
@@ -40,7 +44,7 @@ const Navbar = () => {
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
         </Link>
-        <ul className="p-2 z-[1]">
+        <ul className="p-2 z-[1] bg-blue-50">
           <li>
             <Link className="active:bg-inherit">Rider</Link>
           </li>
@@ -64,7 +68,7 @@ const Navbar = () => {
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
             </Link>
-            <ul className="p-2">
+            <ul className="p-2 z-[1] bg-blue-50">
               <li>
                 <Link to="/rider-register" className="active:bg-inherit">
                   Rider
@@ -90,7 +94,7 @@ const Navbar = () => {
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
             </Link>
-            <ul className="p-2">
+            <ul className="p-2 z-[1] bg-blue-50">
               <li>
                 <Link to="/rider-login" className="active:bg-inherit">
                   Rider
@@ -113,7 +117,7 @@ const Navbar = () => {
   );
   return (
     <section>
-      <div className="navbar container mx-auto">
+      <div className="navbar container mx-auto py-7">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -139,7 +143,7 @@ const Navbar = () => {
               {items}
             </ul>
           </div>
-          <Link className="text-2xl md:text-3xl font-bold ">
+          <Link to="/" className="text-2xl md:text-3xl font-bold ">
             <span className="text-info">Hero</span> Rider
           </Link>
         </div>
