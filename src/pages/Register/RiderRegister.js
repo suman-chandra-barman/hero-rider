@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const RiderRegister = () => {
@@ -10,7 +10,9 @@ const RiderRegister = () => {
   const [signUpError, setSignUpError] = useState("");
 
   const { createUser, updateUserProfile } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  let from = location.state?.from?.pathname || "/profile";
 
   const imgApi = process.env.REACT_APP_imageBbApi;
 
@@ -143,7 +145,7 @@ const RiderRegister = () => {
       .then((data) => {
         if (data.acknowledged) {
           console.log(data);
-          // navigate(from, { replace: true });
+          navigate(from, { replace: true });
         }
       })
       .catch((err) => console.error(err));

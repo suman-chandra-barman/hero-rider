@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const RiderLogin = () => {
   const [loginError, setLoginError] = useState("");
   const { emailLogin } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  let from = location.state?.from?.pathname || "/profile";
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -18,6 +21,7 @@ const RiderLogin = () => {
         console.log(user);
         toast.success("Login successful!");
         setLoginError("");
+        navigate(from, { replace: true });
         e.target.reset();
       })
       .catch((err) => {
