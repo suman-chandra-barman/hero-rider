@@ -40,7 +40,7 @@ const Navbar = () => {
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
         </Link>
-        <ul className="p-2">
+        <ul className="p-2 z-[1]">
           <li>
             <Link className="active:bg-inherit">Rider</Link>
           </li>
@@ -139,7 +139,9 @@ const Navbar = () => {
               {items}
             </ul>
           </div>
-          <Link className="text-2xl font-bold">Hero Rider</Link>
+          <Link className="text-2xl md:text-3xl font-bold ">
+            <span className="text-info">Hero</span> Rider
+          </Link>
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{items}</ul>
